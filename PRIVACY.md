@@ -28,8 +28,8 @@ When the extension's panel is mounted on a Garmin Connect workout page, it reads
 
 ## Sale or sharing of data
 
-We do not sell, share, or transfer any user data to third parties. The extension's source code is open at https://github.com/adrianjones/garmin-workout-generator and can be audited.
+We do not sell, share, or transfer any user data to third parties. The extension's source code is open at https://github.com/adrianbj/garmin-workout-generator and can be audited.
 
 ## Contact
 
-Open an issue at https://github.com/adrianjones/garmin-workout-generator/issues for questions about this policy.
+Open an issue at https://github.com/adrianbj/garmin-workout-generator/issues for questions about this policy.

@@ -75,7 +75,7 @@ The extension does not transmit your data to any server we operate. It only talk
 - connect.garmin.com (to save your workout to your Garmin account)
 - generativelanguage.googleapis.com (to parse your description via your own Gemini API key)
 
-Source code is open at https://github.com/adrianjones/garmin-workout-generator. See the privacy policy for details.
+Source code is open at https://github.com/adrianbj/garmin-workout-generator. See the privacy policy for details.
 
 == LIMITATIONS ==
 
