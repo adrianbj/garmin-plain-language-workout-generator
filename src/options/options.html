@@ -2,11 +2,25 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Garmin Workout Generator — Options</title>
+    <title>Garmin Workout Generator — Pace Zones</title>
+    <link rel="stylesheet" href="./options.css" />
   </head>
   <body>
-    <h1>Pace zones</h1>
-    <div id="root"></div>
+    <main>
+      <h1>Pace zones</h1>
+      <p>Used by the parser to resolve names like "aerobic threshold" to actual paces. Pace is m:ss per km.</p>
+      <table id="zones">
+        <thead>
+          <tr><th>Name</th><th>Min (faster)</th><th>Max (slower)</th><th></th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="actions">
+        <button id="add">+ Add zone</button>
+        <button id="save" class="primary">Save</button>
+      </div>
+      <p id="status" aria-live="polite"></p>
+    </main>
     <script type="module" src="./options.ts"></script>
   </body>
 </html>
