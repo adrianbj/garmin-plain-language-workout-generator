@@ -2,6 +2,8 @@
 
 Chrome extension that adds a panel to Garmin Connect's workout builder where you type running workouts in plain language and have them created in Garmin with one click.
 
+![Panel mounted on Garmin Connect's workout builder](./screenshots/panel-empty.png)
+
 ## Example
 
 Type:
