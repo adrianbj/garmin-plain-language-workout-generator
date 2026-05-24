@@ -60,7 +60,7 @@ async function onSave(): Promise<void> {
     render();
     return;
   }
-  window.location.assign(`/app/workout/${result.value.workoutId}/edit`);
+  window.location.assign(`/app/workout/${result.value.workoutId}?workoutType=running`);
 }
 
 function onOpenOptions(): void {
