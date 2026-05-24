@@ -5,7 +5,7 @@ export default defineManifest({
   name: "Garmin Workout Generator",
   version: "0.1.0",
   description: "Generate Garmin running workouts from plain-language descriptions, on-device.",
-  permissions: ["storage"],
+  permissions: ["storage", "scripting"],
   host_permissions: ["https://connect.garmin.com/*"],
   options_page: "src/options/options.html",
   background: {
