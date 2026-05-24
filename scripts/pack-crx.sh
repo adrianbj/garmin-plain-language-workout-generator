@@ -10,7 +10,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT/dist"
 KEY="$ROOT/.crx-key.pem"
 VERSION="$(node -p "require('./package.json').version")"
-OUT="$ROOT/garmin-workout-generator-$VERSION.crx"
+NAME="$(node -p "require('./package.json').name")"
+OUT="$ROOT/$NAME-$VERSION.crx"
 
 if [ ! -x "$CHROME" ]; then
   echo "Chrome not found at $CHROME. Edit pack-crx.sh to point at your install."
@@ -36,7 +37,7 @@ mv "$ROOT/dist.crx" "$OUT"
 
 # Also produce a plain zip — recipients can "Load unpacked" the unzipped
 # contents in chrome://extensions, bypassing Chrome's self-signed CRX block.
-ZIP_OUT="$ROOT/garmin-workout-generator-$VERSION.zip"
+ZIP_OUT="$ROOT/$NAME-$VERSION.zip"
 rm -f "$ZIP_OUT"
 ( cd "$DIST" && zip -qr "$ZIP_OUT" . )
 

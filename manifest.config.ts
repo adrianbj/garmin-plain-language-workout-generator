@@ -2,7 +2,7 @@ import { defineManifest } from "@crxjs/vite-plugin";
 
 export default defineManifest({
   manifest_version: 3,
-  name: "Garmin Workout Generator",
+  name: "Garmin Plain-Language Workout Generator",
   version: "1.0.1",
   description: "Turn plain-language descriptions into structured Garmin running workouts using Google's free Gemini API (bring your own key).",
   icons: {
@@ -17,7 +17,7 @@ export default defineManifest({
       32: "icons/icon32.png",
       48: "icons/icon48.png",
     },
-    default_title: "Garmin Workout Generator",
+    default_title: "Garmin Plain-Language Workout Generator",
   },
   permissions: ["storage", "scripting"],
   host_permissions: [

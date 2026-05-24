@@ -1,4 +1,4 @@
-# Garmin Workout Generator
+# Garmin Plain-Language Workout Generator
 
 Chrome extension that adds a panel to Garmin Connect's workout builder where you type running workouts in plain language and have them created in Garmin with one click.
 
@@ -16,7 +16,7 @@ Click Generate. Review the parsed steps. Click Save to Garmin. The workout shows
 
 The extension is not yet on the Chrome Web Store. To install the current build:
 
-1. Download the latest `garmin-workout-generator-*.zip` from the [Releases](https://github.com/adrianbj/garmin-workout-generator/releases) page.
+1. Download the latest `garmin-plain-language-workout-generator-*.zip` from the [Releases](https://github.com/adrianbj/garmin-plain-language-workout-generator/releases) page.
 2. Open `chrome://extensions` in Chrome.
 3. Enable **Developer mode** (top right).
 4. Drag the zip file onto the page.
@@ -24,7 +24,7 @@ The extension is not yet on the Chrome Web Store. To install the current build:
 
 ## Setup
 
-Open the extension's Options page (via `chrome://extensions` → Garmin Workout Generator → Details → Extension options).
+Open the extension's Options page (via `chrome://extensions` → Garmin Plain-Language Workout Generator → Details → Extension options).
 
 ### 1. Gemini API key (strongly recommended)
 
