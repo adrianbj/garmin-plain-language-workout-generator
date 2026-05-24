@@ -7,6 +7,7 @@ import { validate } from "./validate";
 import { generateName } from "./nameGenerator";
 import { getSettings } from "../storage/storage";
 import { generateWithGeminiApi } from "./geminiApi";
+import { applyWarmupCooldownDefaults } from "./applyDefaults";
 
 export type ParseFailureCode =
   | "NOT_AVAILABLE"
@@ -152,7 +153,8 @@ export async function parse(
 
   const validated = schemaResult.data as unknown as WorkoutPlan;
   const name = validated.name ?? generateName(validated);
-  const plan: WorkoutPlan = { ...validated, name };
+  const withDefaults = applyWarmupCooldownDefaults(validated);
+  const plan: WorkoutPlan = { ...withDefaults, name };
 
   const errors = validate(plan, zones);
   return ok({ plan, errors });

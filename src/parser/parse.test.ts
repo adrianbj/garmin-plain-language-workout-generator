@@ -30,7 +30,11 @@ describe("parse", () => {
     const result = await parse("12' at aerobic threshold", zones);
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.value.plan.steps).toHaveLength(1);
+      // 3 steps because parse() now auto-adds an open warmup and cooldown
+      // around the user's work interval.
+      expect(result.value.plan.steps).toHaveLength(3);
+      expect(result.value.plan.steps[0]?.kind === "interval" && result.value.plan.steps[0].intent).toBe("warmup");
+      expect(result.value.plan.steps[2]?.kind === "interval" && result.value.plan.steps[2].intent).toBe("cooldown");
       expect(result.value.errors).toEqual([]);
     }
   });
