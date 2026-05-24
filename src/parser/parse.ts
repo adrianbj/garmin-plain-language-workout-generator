@@ -27,10 +27,28 @@ type LanguageModelSession = {
   destroy: () => void;
 };
 
-type LanguageModelGlobal = {
-  availability: () => Promise<"no" | "readily" | "after-download" | "downloadable">;
-  create: (opts: { systemPrompt: string }) => Promise<LanguageModelSession>;
+type LanguageModelExpectation = { type: "text"; languages?: string[] };
+
+type LanguageModelMonitor = {
+  addEventListener: (
+    type: "downloadprogress",
+    listener: (event: { loaded: number; total?: number }) => void,
+  ) => void;
 };
+
+type LanguageModelCreateOptions = {
+  systemPrompt: string;
+  expectedInputs?: LanguageModelExpectation[];
+  expectedOutputs?: LanguageModelExpectation[];
+  monitor?: (m: LanguageModelMonitor) => void;
+};
+
+type LanguageModelGlobal = {
+  availability: () => Promise<string>;
+  create: (opts: LanguageModelCreateOptions) => Promise<LanguageModelSession>;
+};
+
+const UNAVAILABLE_STATES = new Set(["no", "unavailable"]);
 
 function getLM(): LanguageModelGlobal | undefined {
   return (globalThis as unknown as { LanguageModel?: LanguageModelGlobal }).LanguageModel;
@@ -40,11 +58,27 @@ async function getSession(zones: ZoneConfig): Promise<Result<LanguageModelSessio
   const lm = getLM();
   if (!lm) return err({ code: "NOT_AVAILABLE", message: "Prompt API not available in this browser." });
   const availability = await lm.availability();
-  if (availability === "no") return err({ code: "NOT_AVAILABLE", message: "Gemini Nano is not available on this device." });
+  console.log("[gwg] LanguageModel.availability:", availability);
+  if (UNAVAILABLE_STATES.has(availability)) {
+    return err({ code: "NOT_AVAILABLE", message: "Gemini Nano is not available on this device." });
+  }
   const key = JSON.stringify(zones);
   if (cached && cached.key === key) return ok(cached.session);
   if (cached) cached.session.destroy();
-  const session = await lm.create({ systemPrompt: buildSystemPrompt(zones) });
+  console.log("[gwg] creating LanguageModel session…");
+  const t0 = performance.now();
+  const session = await lm.create({
+    systemPrompt: buildSystemPrompt(zones),
+    expectedInputs: [{ type: "text", languages: ["en"] }],
+    expectedOutputs: [{ type: "text", languages: ["en"] }],
+    monitor(m) {
+      m.addEventListener("downloadprogress", (e) => {
+        const pct = e.total ? Math.round((e.loaded / e.total) * 100) : Math.round(e.loaded * 100);
+        console.log(`[gwg] Gemini Nano downloading: ${pct}%`);
+      });
+    },
+  });
+  console.log(`[gwg] session ready in ${Math.round(performance.now() - t0)}ms`);
   cached = { key, session };
   return ok(session);
 }
@@ -59,8 +93,12 @@ export async function parse(
 
   let raw: string;
   try {
+    console.log("[gwg] prompting model…");
+    const t0 = performance.now();
     raw = await session.prompt(text, { responseConstraint: workoutPlanJsonSchema });
+    console.log(`[gwg] prompt completed in ${Math.round(performance.now() - t0)}ms`);
   } catch (cause) {
+    console.error("[gwg] prompt failed:", cause);
     return err({ code: "PROMPT_FAILED", message: "The on-device model failed to respond.", cause });
   }
 
