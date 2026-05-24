@@ -17,6 +17,8 @@ describe("createWorkout", () => {
   let transport: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
+    // Inject the CSRF meta tag our client reads from the page.
+    document.head.innerHTML = '<meta name="csrf-token" content="test-csrf-token-123">';
     transport = vi.fn();
     _setFetchTransportForTesting(transport as unknown as (r: PageFetchRequest) => Promise<PageFetchResponse>);
   });
@@ -35,9 +37,17 @@ describe("createWorkout", () => {
     expect(call).toBeDefined();
     const req = call?.[0] as PageFetchRequest;
     expect(req.method).toBe("POST");
-    expect(req.headers?.["Content-Type"]).toBe("application/json");
-    expect(req.headers?.["NK"]).toBe("NT");
+    expect(req.headers?.["Content-Type"]).toBe("application/json; charset=UTF-8");
+    expect(req.headers?.["connect-csrf-token"]).toBe("test-csrf-token-123");
+    expect(req.headers?.["x-requested-with"]).toBe("XMLHttpRequest");
     expect(JSON.parse(req.body ?? "")).toEqual(exampleJson);
+  });
+
+  it("returns NO_CSRF_TOKEN when meta tag is missing", async () => {
+    document.head.innerHTML = "";
+    const result = await createWorkout(exampleJson);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error.code).toBe("NO_CSRF_TOKEN");
   });
 
   it("returns SESSION_EXPIRED on 401", async () => {

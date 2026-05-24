@@ -83,6 +83,7 @@ function friendlyParseError(code: string, message: string): string {
 function friendlyGarminError(code: string, message: string): string {
   switch (code) {
     case "SESSION_EXPIRED": return "Garmin session expired — refresh the page and try again.";
+    case "NO_CSRF_TOKEN":   return "Couldn't find Garmin's CSRF token — refresh the page and try again.";
     case "BAD_REQUEST":     return `Garmin rejected the workout: ${message}`;
     case "UNREACHABLE":     return "Garmin is unreachable. Check your connection and try again.";
     default:                return message;
