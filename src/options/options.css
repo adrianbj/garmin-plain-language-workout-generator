@@ -3,6 +3,8 @@ h1 { margin-top: 0; }
 section { margin-bottom: 32px; }
 label { display: block; font-size: 13px; color: #607d8b; margin-top: 12px; margin-bottom: 4px; }
 #apiKey { width: 100%; padding: 6px 8px; box-sizing: border-box; font-family: monospace; }
+.hint { font-size: 13px; color: #607d8b; margin-top: 8px; }
+code { background: #eceff1; padding: 1px 4px; border-radius: 3px; font-size: 13px; }
 table { width: 100%; border-collapse: collapse; margin-top: 12px; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eceff1; }
 th { font-weight: 600; color: #607d8b; }

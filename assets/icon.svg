@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect width="128" height="128" rx="22" fill="#1976d2"/>
+  <!-- 4-point sparkle star centered at (64,64) -->
+  <path d="M64 16 L72 56 L112 64 L72 72 L64 112 L56 72 L16 64 L56 56 Z" fill="#fff"/>
+  <!-- small accent dot -->
+  <circle cx="100" cy="28" r="6" fill="#fff" opacity="0.85"/>
+</svg>

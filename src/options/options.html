@@ -8,13 +8,17 @@
   <body>
     <main>
       <section>
-        <h1>Parser backend</h1>
-        <p>By default the extension parses with Chrome's on-device Gemini Nano (free, no key, ~30s/parse, sometimes flubs notation).
-          Paste a Google AI Studio API key to use Gemini 2.5 Flash instead (free tier covers ~1500 parses/day,
-          ~1s/parse, far more reliable). Get a key at
-          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.</p>
-        <label for="apiKey">Gemini API key (optional):</label>
+        <h1>Gemini API key</h1>
+        <p><strong>Strongly recommended.</strong> Paste a free Google AI Studio key to parse your descriptions
+          with Gemini 2.5 Flash — fast (~1s) and reliable on shorthand notation, nested repeats, and pace zones.
+          Google's free tier covers ~1500 parses per day.</p>
+        <p>Get a key at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>
+          → Sign in → "Create API key" → copy the value starting with <code>AIza…</code>.</p>
+        <label for="apiKey">Gemini API key:</label>
         <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off" spellcheck="false" />
+        <p class="hint">If left blank, the extension falls back to Chrome's on-device Gemini Nano. The fallback is
+          <strong>greatly inferior</strong> — it routinely mishandles standard running shorthand on anything beyond
+          a single interval. Use a key.</p>
       </section>
 
       <section>
