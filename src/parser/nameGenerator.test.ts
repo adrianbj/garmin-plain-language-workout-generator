@@ -21,7 +21,17 @@ describe("generateName", () => {
         { kind: "interval", intent: "rest", duration: { unit: "time", seconds: 120 } },
       ]}],
     };
-    expect(generateName(plan)).toBe("5x1k @ 5k");
+    expect(generateName(plan)).toBe(`5x1k/2' @ 5k`);
+  });
+
+  it("describes a uniform repeat with no rest as just Nx<dur>", () => {
+    const plan: WorkoutPlan = {
+      sport: "running",
+      steps: [{ kind: "repeat", count: 8, children: [
+        { kind: "interval", intent: "work", duration: { unit: "time", seconds: 20 }, notes: "stride" },
+      ]}],
+    };
+    expect(generateName(plan)).toBe(`8x20"`);
   });
 
   it("describes a varied flat sequence", () => {

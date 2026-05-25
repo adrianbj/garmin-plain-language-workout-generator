@@ -61,9 +61,19 @@ function describeMainStep(step: Step): string | undefined {
   const oneZone = zones.size === 1 ? [...zones][0] : undefined;
 
   if (allSameDuration && workChildren.length === 1) {
-    // Canonical uniform repeat: "5x1k @ 5k"
+    // Canonical uniform repeat: "5x1k @ 5k", or "5x1k/2' @ 5k" when the rep
+    // unit pairs a work step with one rest/recovery step.
     const dur = describeDuration(first);
-    const base = `${step.count}x${dur}`;
+    const restChildren = step.children.filter(
+      (c): c is IntervalStep =>
+        c.kind === "interval" && (c.intent === "rest" || c.intent === "recovery"),
+    );
+    let workToken = dur;
+    if (restChildren.length === 1) {
+      const restDur = describeDuration(restChildren[0]!);
+      if (restDur) workToken = `${dur}/${restDur}`;
+    }
+    const base = `${step.count}x${workToken}`;
     return oneZone ? `${base} @ ${oneZone}` : base;
   }
 
